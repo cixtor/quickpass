@@ -28,8 +28,9 @@ private:
     void ResetTextBuffer();
     QString GetAccount();
     bool IsRequestedAccount(QString, QString);
-    void SaveAccountChanges();
+    bool SaveAccountChanges();
     void SetEditMode(bool);
+    bool IsEditable();
 };
 
 #endif // QUICKPASS_H

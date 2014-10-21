@@ -88,22 +88,28 @@ QString Quickpass::GetAccount(){
     return multipleAccounts;
 }
 
-void Quickpass::SaveAccountChanges(){
+bool Quickpass::SaveAccountChanges(){
     bool fileIsWritable = true;
     QFile file(AccountsFilepath);
-    if( file.exists() ){
+
+    if ( file.exists() ) {
         QFileInfo fileInfo(file);
         fileIsWritable = fileInfo.isWritable();
     }
 
-    if( fileIsWritable ){
+    if ( fileIsWritable ) {
         QString currentTextBuffer = ui->textView->toPlainText();
-        if( file.open(QIODevice::WriteOnly | QIODevice::Text) ){
+
+        if ( file.open(QIODevice::WriteOnly | QIODevice::Text) ) {
             QTextStream out(&file);
             out << currentTextBuffer;
             file.close();
+
+            return true;
         }
     }
+
+    return false;
 }
 
 void Quickpass::SetEditMode(bool enabled=false){
@@ -116,25 +122,38 @@ void Quickpass::SetEditMode(bool enabled=false){
     }
 }
 
+bool Quickpass::IsEditable(){
+    return ui->editModeCheckbox->isChecked();
+}
+
 void Quickpass::on_searchEntry_returnPressed(){
     ui->textView->setText( GetAccount() );
 }
 
 void Quickpass::on_saveFileBtn_clicked(){
-    SaveAccountChanges();
-    ui->textView->setText( GetAccounts() );
-    ui->statusBar->showMessage("Changes made saved!", 3000);
+    if ( IsEditable() ) {
+        SaveAccountChanges();
+        ui->textView->setText( GetAccounts() );
+        ui->statusBar->showMessage("Changes made saved!", 3000);
+    }
+
+    else {
+        QMessageBox::information(
+            this,
+            "Quickpass error",
+            "Error saving data in file:\nEdit mode is disabled."
+        );
+    }
 }
 
 void Quickpass::on_editModeCheckbox_clicked(){
-    bool editModeEnabled = ui->editModeCheckbox->isChecked();
+    bool editModeEnabled = IsEditable();
     SetEditMode(editModeEnabled);
 
     QString editModeState = editModeEnabled ? "enabled" : "disabled";
     ui->statusBar->showMessage("Edit mode "+editModeState, 3000);
 }
 
-Quickpass::~Quickpass()
-{
+Quickpass::~Quickpass(){
     delete ui;
 }
