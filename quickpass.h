@@ -4,11 +4,10 @@
 #include <QMainWindow>
 
 namespace Ui {
-class Quickpass;
+    class Quickpass;
 }
 
-class Quickpass : public QMainWindow
-{
+class Quickpass : public QMainWindow {
     Q_OBJECT
 
 public:

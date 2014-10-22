@@ -22,22 +22,24 @@ QString Quickpass::GetAccounts(){
     QString textViewContent;
     QFile file(AccountsFilepath);
 
-    if( file.open(QIODevice::ReadOnly | QIODevice::Text) ){
+    if ( file.open(QIODevice::ReadOnly | QIODevice::Text) ) {
         QTextStream in(&file);
         in.setCodec("UTF-8");
 
         int count(0);
-        while( !in.atEnd() ){
+        while ( !in.atEnd() ) {
             count += 1;
             QString line = in.readLine();
             textViewContent += line + "\n";
         }
 
         Accounts = textViewContent;
-        ui->statusBar->showMessage("Accounts file loaded!", 1000);
+        ui->statusBar->showMessage( "Accounts file loaded!", 1000 );
         file.close();
-    }else{
-        ui->statusBar->showMessage("Error. Accounts file is not readable.", 3000);
+    }
+
+    else {
+        ui->statusBar->showMessage( "Error. Accounts file is not readable.", 3000 );
     }
 
     return Accounts;
@@ -47,14 +49,17 @@ void Quickpass::ResetTextBuffer(){
     ui->textView->clear();
 }
 
-bool Quickpass::IsRequestedAccount(QString requestedAccount, QString accountCredentials){
+bool Quickpass::IsRequestedAccount( QString requestedAccount, QString accountCredentials ){
     QStringList lines = accountCredentials.split( QRegExp("\n") );
+
     for( QStringList::iterator it=lines.begin(); it!=lines.end(); it++ ){
         QString currentLine = *it;
-        if( currentLine.contains(QRegExp(requestedAccount)) ){
+
+        if ( currentLine.contains(QRegExp(requestedAccount)) ) {
             return true;
         }
     }
+
     return false;
 }
 
@@ -64,26 +69,30 @@ QString Quickpass::GetAccount(){
     QString accountCredentials;
     QString requestedAccount = ui->searchEntry->text();
 
-	if( requestedAccount.isEmpty() ){
+    if ( requestedAccount.isEmpty() ) {
 		return Accounts;
-    }else{
+    }
+
+    else {
         QRegExp rx("\n");
         QStringList lines = Accounts.split(rx);
 
-        for( QStringList::iterator it=lines.begin(); it!=lines.end(); it++ ){
+        for ( QStringList::iterator it=lines.begin(); it!=lines.end(); it++ ) {
             QString currentLine = *it;
-            if( currentLine.contains( QRegExp("^===") ) ){
-                if( IsRequestedAccount(requestedAccount, accountCredentials) ){
+
+            if ( currentLine.contains( QRegExp("^===") ) ) {
+                if ( IsRequestedAccount(requestedAccount, accountCredentials) ) {
                     accountsFound += 1;
                     multipleAccounts += accountCredentials+"===\n";
                 }
                 accountCredentials = "";
-            }else{
+            } else {
                 accountCredentials += currentLine+"\n";
             }
         }
     }
-    ui->statusBar->showMessage("Found "+QString::number(accountsFound)+" accounts.");
+
+    ui->statusBar->showMessage( "Found " + QString::number(accountsFound) + " accounts." );
 
     return multipleAccounts;
 }
@@ -113,10 +122,10 @@ bool Quickpass::SaveAccountChanges(){
 }
 
 void Quickpass::SetEditMode(bool enabled=false){
-    if( enabled == true ){
+    if ( enabled == true ) {
         ui->editModeCheckbox->setChecked(true);
         ui->textView->setReadOnly(false);
-    }else{
+    } else {
         ui->editModeCheckbox->setChecked(false);
         ui->textView->setReadOnly(true);
     }
@@ -151,7 +160,7 @@ void Quickpass::on_editModeCheckbox_clicked(){
     SetEditMode(editModeEnabled);
 
     QString editModeState = editModeEnabled ? "enabled" : "disabled";
-    ui->statusBar->showMessage("Edit mode "+editModeState, 3000);
+    ui->statusBar->showMessage( "Edit mode " + editModeState, 3000 );
 }
 
 Quickpass::~Quickpass(){
