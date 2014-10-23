@@ -21,6 +21,7 @@ private slots:
     void on_searchEntry_returnPressed();
     void on_saveFileBtn_clicked();
     void on_editModeCheckbox_clicked();
+    void on_generateNewAccount_clicked();
 
 private:
     Ui::Quickpass *ui;
@@ -30,6 +31,7 @@ private:
     bool SaveAccountChanges();
     void SetEditMode(bool);
     bool IsEditable();
+
 };
 
 #endif // QUICKPASS_H

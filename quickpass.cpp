@@ -1,5 +1,7 @@
 #include "quickpass.h"
+#include "newaccount.h"
 #include "ui_quickpass.h"
+#include "ui_newaccount.h"
 
 #include <QDebug>
 #include <QDir>
@@ -14,8 +16,15 @@ Quickpass::Quickpass(QWidget *parent) :
 {
     ui->setupUi(this);
     AccountsFilepath = qApp->applicationDirPath() + "/accounts.txt";
-	ui->textView->setText( GetAccounts() );
+    ui->textView->setText( GetAccounts() );
     SetEditMode(false);
+}
+
+NewAccount::NewAccount(QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::NewAccount)
+{
+    ui->setupUi(this);
 }
 
 QString Quickpass::GetAccounts(){
@@ -70,7 +79,7 @@ QString Quickpass::GetAccount(){
     QString requestedAccount = ui->searchEntry->text();
 
     if ( requestedAccount.isEmpty() ) {
-		return Accounts;
+        return Accounts;
     }
 
     else {
@@ -163,6 +172,18 @@ void Quickpass::on_editModeCheckbox_clicked(){
     ui->statusBar->showMessage( "Edit mode " + editModeState, 3000 );
 }
 
+void Quickpass::on_generateNewAccount_clicked(){
+    QDialog *widget = new QDialog;
+    Ui::NewAccount uiNewAccount;
+
+    uiNewAccount.setupUi(widget);
+    widget->show();
+}
+
 Quickpass::~Quickpass(){
+    delete ui;
+}
+
+NewAccount::~NewAccount(){
     delete ui;
 }

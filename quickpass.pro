@@ -15,6 +15,8 @@ TEMPLATE = app
 SOURCES += main.cpp\
         quickpass.cpp
 
-HEADERS  += quickpass.h
+HEADERS  += quickpass.h \
+    newaccount.h
 
-FORMS    += quickpass.ui
+FORMS    += quickpass.ui \
+    newaccount.ui
