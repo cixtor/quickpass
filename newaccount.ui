@@ -1,71 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <author/>
- <comment/>
- <exportmacro/>
  <class>NewAccount</class>
  <widget class="QDialog" name="NewAccount">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>310</width>
+    <height>270</height>
    </rect>
   </property>
-  <property name="windowTitle">
-   <string>Dialog</string>
+  <property name="minimumSize">
+   <size>
+    <width>310</width>
+    <height>270</height>
+   </size>
   </property>
-  <widget class="QDialogButtonBox" name="buttonBox">
+  <property name="maximumSize">
+   <size>
+    <width>310</width>
+    <height>270</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Quickpass - New Account</string>
+  </property>
+  <widget class="QLabel" name="uniqueIdLabel">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>240</y>
-     <width>341</width>
-     <height>32</height>
+     <x>10</x>
+     <y>10</y>
+     <width>80</width>
+     <height>22</height>
     </rect>
    </property>
-   <property name="orientation">
-    <enum>Qt::Horizontal</enum>
+   <property name="text">
+    <string>Unique ID</string>
    </property>
-   <property name="standardButtons">
-    <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+  </widget>
+  <widget class="QLineEdit" name="uniqueIdInput">
+   <property name="geometry">
+    <rect>
+     <x>100</x>
+     <y>10</y>
+     <width>200</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="placeholderText">
+    <string>Unique identifier (optional)...</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="hostnameLabel">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>40</y>
+     <width>80</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Hostname</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="hostnameInput">
+   <property name="geometry">
+    <rect>
+     <x>100</x>
+     <y>40</y>
+     <width>200</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="placeholderText">
+    <string>e.g. http://example.com/</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="usernameLabel">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>70</y>
+     <width>80</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Username</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="usernameInput">
+   <property name="geometry">
+    <rect>
+     <x>100</x>
+     <y>70</y>
+     <width>200</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="passwordLabel">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>100</y>
+     <width>80</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Password</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="passwordInput">
+   <property name="geometry">
+    <rect>
+     <x>100</x>
+     <y>100</y>
+     <width>200</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="extraInfoLabel">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>130</y>
+     <width>290</width>
+     <height>100</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Monospace</family>
+    </font>
+   </property>
+   <property name="placeholderText">
+    <string>Additional information (optional)...</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="newAccountAccepted">
+   <property name="geometry">
+    <rect>
+     <x>150</x>
+     <y>240</y>
+     <width>70</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>OK</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="newAccountRejected">
+   <property name="geometry">
+    <rect>
+     <x>230</x>
+     <y>240</y>
+     <width>70</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Cancel</string>
    </property>
   </widget>
  </widget>
- <pixmapfunction/>
- <resources/>
- <connections>
-  <connection>
-   <sender>buttonBox</sender>
-   <signal>accepted()</signal>
-   <receiver>NewAccount</receiver>
-   <slot>accept()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>248</x>
-     <y>254</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>157</x>
-     <y>274</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>buttonBox</sender>
-   <signal>rejected()</signal>
-   <receiver>NewAccount</receiver>
-   <slot>reject()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>316</x>
-     <y>260</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>286</x>
-     <y>274</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
 </ui>

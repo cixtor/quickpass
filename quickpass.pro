@@ -11,12 +11,6 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = quickpass
 TEMPLATE = app
 
-
-SOURCES += main.cpp\
-        quickpass.cpp
-
-HEADERS  += quickpass.h \
-    newaccount.h
-
-FORMS    += quickpass.ui \
-    newaccount.ui
+SOURCES += main.cpp quickpass.cpp
+HEADERS += quickpass.h newaccount.h
+FORMS   += quickpass.ui newaccount.ui

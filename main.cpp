@@ -1,11 +1,10 @@
 #include "quickpass.h"
 #include <QApplication>
 
-int main(int argc, char *argv[])
-{
-    QApplication a(argc, argv);
-    Quickpass w;
-    w.show();
+int main( int argc, char *argv[] ){
+    QApplication application(argc, argv);
+    Quickpass window;
+    window.show();
     
-    return a.exec();
+    return application.exec();
 }
