@@ -1,13 +1,13 @@
 #ifndef NEWACCOUNT_H
 #define NEWACCOUNT_H
 
-#include <QDialog>
+#include <QWidget>
 
 namespace Ui {
     class NewAccount;
 }
 
-class NewAccount : public QDialog {
+class NewAccount : public QWidget {
     Q_OBJECT
 
 public:

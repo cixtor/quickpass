@@ -6,9 +6,9 @@
 #include <QDebug>
 #include <QDir>
 #include <QFile>
-#include <QTextStream>
-#include <QString>
 #include <QMessageBox>
+#include <QString>
+#include <QTextStream>
 
 Quickpass::Quickpass(QWidget *parent) :
     QMainWindow(parent),
@@ -21,7 +21,7 @@ Quickpass::Quickpass(QWidget *parent) :
 }
 
 NewAccount::NewAccount(QWidget *parent) :
-    QDialog(parent),
+    QWidget(parent),
     ui(new Ui::NewAccount)
 {
     ui->setupUi(this);
@@ -173,7 +173,7 @@ void Quickpass::on_editModeCheckbox_clicked(){
 }
 
 void Quickpass::on_generateNewAccount_clicked(){
-    QDialog *widget = new QDialog;
+    QWidget *widget = new QWidget;
     Ui::NewAccount uiNewAccount;
 
     uiNewAccount.setupUi(widget);
