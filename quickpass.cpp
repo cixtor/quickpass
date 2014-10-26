@@ -15,9 +15,9 @@ Quickpass::Quickpass(QWidget *parent) :
     ui(new Ui::Quickpass)
 {
     ui->setupUi(this);
-    AccountsFilepath = qApp->applicationDirPath() + "/accounts.txt";
-    ui->textView->setText( GetAccounts() );
+
     SetEditMode(false);
+    ui->textView->setText( GetAccounts() );
 }
 
 NewAccount::NewAccount(QWidget *parent) :
@@ -27,9 +27,13 @@ NewAccount::NewAccount(QWidget *parent) :
     ui->setupUi(this);
 }
 
+QString Quickpass::GetAccountFilepath(){
+    return qApp->applicationDirPath() + "/accounts.txt";
+}
+
 QString Quickpass::GetAccounts(){
     QString textViewContent;
-    QFile file(AccountsFilepath);
+    QFile file( GetAccountFilepath() );
 
     if ( file.open(QIODevice::ReadOnly | QIODevice::Text) ) {
         QTextStream in(&file);
@@ -108,7 +112,7 @@ QString Quickpass::GetAccount(){
 
 bool Quickpass::SaveAccountChanges(){
     bool fileIsWritable = true;
-    QFile file(AccountsFilepath);
+    QFile file( GetAccountFilepath() );
 
     if ( file.exists() ) {
         QFileInfo fileInfo(file);
@@ -173,11 +177,26 @@ void Quickpass::on_editModeCheckbox_clicked(){
 }
 
 void Quickpass::on_generateNewAccount_clicked(){
-    QWidget *widget = new QWidget;
-    Ui::NewAccount uiNewAccount;
-
-    uiNewAccount.setupUi(widget);
+    QWidget *widget = new NewAccount;
     widget->show();
+}
+
+void NewAccount::on_accountAcceptedBtn_clicked(){
+    QString new_account_str;
+
+    QString unique_id = ui->uniqueIdInput->text();
+    QString hostname = ui->hostnameInput->text();
+    QString username = ui->usernameInput->text();
+    QString password = ui->passwordInput->text();
+    QString extra_info = ui->extraInfoInput->toPlainText();
+
+    if ( ! unique_id.isEmpty()  ) { new_account_str += "\n===\n" + unique_id; }
+    if ( ! hostname.isEmpty()   ) { new_account_str += "\nhostname: " + hostname; }
+    if ( ! username.isEmpty()   ) { new_account_str += "\nusername: " + username; }
+    if ( ! password.isEmpty()   ) { new_account_str += "\npassword: " + password; }
+    if ( ! extra_info.isEmpty() ) { new_account_str += "\nextra_info:\n" + extra_info; }
+
+    qDebug() << new_account_str;
 }
 
 Quickpass::~Quickpass(){

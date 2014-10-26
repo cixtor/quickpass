@@ -123,7 +123,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QTextEdit" name="extraInfoLabel">
+  <widget class="QTextEdit" name="extraInfoInput">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -141,7 +141,7 @@
     <string>Additional information (optional)...</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="newAccountAccepted">
+  <widget class="QPushButton" name="accountAcceptedBtn">
    <property name="geometry">
     <rect>
      <x>150</x>
@@ -154,7 +154,7 @@
     <string>OK</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="newAccountRejected">
+  <widget class="QPushButton" name="accountRejectedBtn">
    <property name="geometry">
     <rect>
      <x>230</x>

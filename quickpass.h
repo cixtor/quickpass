@@ -12,25 +12,25 @@ class Quickpass : public QMainWindow {
 
 public:
     explicit Quickpass(QWidget *parent = 0);
-    QString AccountsFilepath;
     QString Accounts;
     QString GetAccounts();
+    QString GetAccountFilepath();
     ~Quickpass();
 
 private slots:
-    void on_searchEntry_returnPressed();
-    void on_saveFileBtn_clicked();
     void on_editModeCheckbox_clicked();
     void on_generateNewAccount_clicked();
+    void on_saveFileBtn_clicked();
+    void on_searchEntry_returnPressed();
 
 private:
     Ui::Quickpass *ui;
-    void ResetTextBuffer();
     QString GetAccount();
+    bool IsEditable();
     bool IsRequestedAccount(QString, QString);
+    void ResetTextBuffer();
     bool SaveAccountChanges();
     void SetEditMode(bool);
-    bool IsEditable();
 
 };
 
