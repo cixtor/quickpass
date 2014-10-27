@@ -76,6 +76,16 @@ bool Quickpass::IsRequestedAccount( QString requestedAccount, QString accountCre
     return false;
 }
 
+bool Quickpass::IsFileUsable(QFile &file){
+    if ( file.exists() ) {
+        QFileInfo fileInfo(file);
+
+        return fileInfo.isWritable();
+    }
+
+    return false;
+}
+
 QString Quickpass::GetAccount(){
     int accountsFound(0);
     QString multipleAccounts;
@@ -111,15 +121,9 @@ QString Quickpass::GetAccount(){
 }
 
 bool Quickpass::SaveAccountChanges(){
-    bool fileIsWritable = true;
     QFile file( GetAccountFilepath() );
 
-    if ( file.exists() ) {
-        QFileInfo fileInfo(file);
-        fileIsWritable = fileInfo.isWritable();
-    }
-
-    if ( fileIsWritable ) {
+    if ( IsFileUsable(file) ) {
         QString currentTextBuffer = ui->textView->toPlainText();
 
         if ( file.open(QIODevice::WriteOnly | QIODevice::Text) ) {
@@ -132,6 +136,32 @@ bool Quickpass::SaveAccountChanges(){
     }
 
     return false;
+}
+
+int Quickpass::InsertNewAccountData(QString account_info){
+    if ( account_info.isEmpty() ) {
+        QMessageBox::warning(
+            this,
+            "Quickpass warning",
+            "Can not save empty information."
+        );
+
+        return 2;
+    }
+
+    else {
+        QFile file( GetAccountFilepath() );
+
+        if ( file.open(QIODevice::Append | QIODevice::WriteOnly) ) {
+            QTextStream out(&file);
+            out << account_info;
+            file.close();
+
+            return 0;
+        }
+    }
+
+    return 1;
 }
 
 void Quickpass::SetEditMode(bool enabled=false){
@@ -182,21 +212,34 @@ void Quickpass::on_generateNewAccount_clicked(){
 }
 
 void NewAccount::on_accountAcceptedBtn_clicked(){
+    Quickpass quickpass;
     QString new_account_str;
 
-    QString unique_id = ui->uniqueIdInput->text();
+    QString uniqueid = ui->uniqueIdInput->text();
     QString hostname = ui->hostnameInput->text();
     QString username = ui->usernameInput->text();
     QString password = ui->passwordInput->text();
-    QString extra_info = ui->extraInfoInput->toPlainText();
+    QString moreinfo = ui->extraInfoInput->toPlainText();
 
-    if ( ! unique_id.isEmpty()  ) { new_account_str += "\n===\n" + unique_id; }
-    if ( ! hostname.isEmpty()   ) { new_account_str += "\nhostname: " + hostname; }
-    if ( ! username.isEmpty()   ) { new_account_str += "\nusername: " + username; }
-    if ( ! password.isEmpty()   ) { new_account_str += "\npassword: " + password; }
-    if ( ! extra_info.isEmpty() ) { new_account_str += "\nextra_info:\n" + extra_info; }
+    if ( ! uniqueid.isEmpty() ) { new_account_str += "uniqueid: " + uniqueid + "\n"; }
+    if ( ! hostname.isEmpty() ) { new_account_str += "hostname: " + hostname + "\n"; }
+    if ( ! username.isEmpty() ) { new_account_str += "username: " + username + "\n"; }
+    if ( ! password.isEmpty() ) { new_account_str += "password: " + password + "\n"; }
+    if ( ! moreinfo.isEmpty() ) { new_account_str += "moreinfo:\n" + moreinfo + "\n"; }
 
-    qDebug() << new_account_str;
+    int newAccountSaved = quickpass.InsertNewAccountData(new_account_str);
+
+    if ( newAccountSaved == 0 ) {
+        NewAccount::close();
+    }
+
+    else if ( newAccountSaved == 1 ) {
+        QMessageBox::critical(
+            this,
+            "Quickpass error",
+            "Could not save new account information.\nClose the window and try again."
+        );
+    }
 }
 
 Quickpass::~Quickpass(){

@@ -2,6 +2,7 @@
 #define QUICKPASS_H
 
 #include <QMainWindow>
+#include <QFile>
 
 namespace Ui {
     class Quickpass;
@@ -15,6 +16,7 @@ public:
     QString Accounts;
     QString GetAccounts();
     QString GetAccountFilepath();
+    int InsertNewAccountData(QString);
     ~Quickpass();
 
 private slots:
@@ -27,6 +29,7 @@ private:
     Ui::Quickpass *ui;
     QString GetAccount();
     bool IsEditable();
+    bool IsFileUsable(QFile&);
     bool IsRequestedAccount(QString, QString);
     void ResetTextBuffer();
     bool SaveAccountChanges();
