@@ -10,6 +10,10 @@
 #include <QString>
 #include <QTextStream>
 
+#define ACCOUNT_FILENAME "accounts.txt"
+#define ACCOUNT_DELIMITER "~~~";
+#define ACCOUNT_PATTERN "^~~~"
+
 Quickpass::Quickpass(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::Quickpass)
@@ -28,7 +32,7 @@ NewAccount::NewAccount(QWidget *parent) :
 }
 
 QString Quickpass::GetAccountFilepath(){
-    return qApp->applicationDirPath() + "/accounts.txt";
+    return qApp->applicationDirPath() + "/" + ACCOUNT_FILENAME;
 }
 
 QString Quickpass::GetAccounts(){
@@ -103,14 +107,17 @@ QString Quickpass::GetAccount(){
         for ( QStringList::iterator it=lines.begin(); it!=lines.end(); it++ ) {
             QString currentLine = *it;
 
-            if ( currentLine.contains( QRegExp("^===") ) ) {
+            if ( currentLine.contains( QRegExp(ACCOUNT_PATTERN) ) ) {
                 if ( IsRequestedAccount(requestedAccount, accountCredentials) ) {
                     accountsFound += 1;
-                    multipleAccounts += accountCredentials+"===\n";
+                    multipleAccounts += accountCredentials;
+                    multipleAccounts += ACCOUNT_DELIMITER;
+                    multipleAccounts += "\n";
                 }
+
                 accountCredentials = "";
             } else {
-                accountCredentials += currentLine+"\n";
+                accountCredentials += currentLine + "\n";
             }
         }
     }
@@ -154,6 +161,8 @@ int Quickpass::InsertNewAccountData(QString account_info){
 
         if ( file.open(QIODevice::Append | QIODevice::WriteOnly) ) {
             QTextStream out(&file);
+            out << ACCOUNT_DELIMITER;
+            out << "\n";
             out << account_info;
             file.close();
 
