@@ -150,7 +150,8 @@ int Quickpass::InsertNewAccountData(QString account_info){
         QMessageBox::warning(
             this,
             "Quickpass warning",
-            "Can not save empty information."
+            "Can not save empty information.\n" \
+            "Add at least a username and password."
         );
 
         return 2;
@@ -199,10 +200,11 @@ void Quickpass::on_saveFileBtn_clicked(){
     }
 
     else {
-        QMessageBox::information(
+        QMessageBox::critical(
             this,
             "Quickpass error",
-            "Error saving data in file:\nEdit mode is disabled."
+            "Error saving data in file.\n" \
+            "Edit mode is disabled."
         );
     }
 }
@@ -246,7 +248,8 @@ void NewAccount::on_accountAcceptedBtn_clicked(){
         QMessageBox::critical(
             this,
             "Quickpass error",
-            "Could not save new account information.\nClose the window and try again."
+            "Could not save new account information.\n" \
+            "Close the window and try again."
         );
     }
 }
