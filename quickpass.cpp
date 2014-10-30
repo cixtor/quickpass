@@ -51,12 +51,12 @@ QString Quickpass::GetAccounts(){
         }
 
         Accounts = textViewContent;
-        ui->statusBar->showMessage( "Accounts file loaded!", 1000 );
+        ui->statusBar->showMessage( "Accounts file loaded.", 1000 );
         file.close();
     }
 
     else {
-        ui->statusBar->showMessage( "Error. Accounts file is not readable.", 3000 );
+        ui->statusBar->showMessage( "Accounts file is not readable.", 3000 );
     }
 
     return Accounts;
@@ -122,7 +122,7 @@ QString Quickpass::GetAccount(){
         }
     }
 
-    ui->statusBar->showMessage( "Found " + QString::number(accountsFound) + " accounts." );
+    ui->statusBar->showMessage( QString::number(accountsFound) + " accounts found." );
 
     return multipleAccounts;
 }
@@ -196,7 +196,7 @@ void Quickpass::on_saveFileBtn_clicked(){
     if ( IsEditable() ) {
         SaveAccountChanges();
         ui->textView->setText( GetAccounts() );
-        ui->statusBar->showMessage("Changes made saved!", 3000);
+        ui->statusBar->showMessage( "Changes saved successfully.", 3000 );
     }
 
     else {
@@ -252,6 +252,10 @@ void NewAccount::on_accountAcceptedBtn_clicked(){
             "Close the window and try again."
         );
     }
+}
+
+void NewAccount::on_accountRejectedBtn_clicked(){
+    NewAccount::close();
 }
 
 Quickpass::~Quickpass(){

@@ -16,6 +16,7 @@ public:
 
 private slots:
     void on_accountAcceptedBtn_clicked();
+    void on_accountRejectedBtn_clicked();
 
 private:
     Ui::NewAccount *ui;
