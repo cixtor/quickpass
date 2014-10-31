@@ -1,7 +1,9 @@
 #include "quickpass.h"
 #include "newaccount.h"
+#include "newpassword.h"
 #include "ui_quickpass.h"
 #include "ui_newaccount.h"
+#include "ui_newpassword.h"
 
 #include <QDebug>
 #include <QDir>
@@ -27,6 +29,13 @@ Quickpass::Quickpass(QWidget *parent) :
 NewAccount::NewAccount(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::NewAccount)
+{
+    ui->setupUi(this);
+}
+
+NewPassword::NewPassword(QWidget *parent) :
+    QWidget(parent),
+    ui(new Ui::NewPassword)
 {
     ui->setupUi(this);
 }
@@ -263,5 +272,9 @@ Quickpass::~Quickpass(){
 }
 
 NewAccount::~NewAccount(){
+    delete ui;
+}
+
+NewPassword::~NewPassword(){
     delete ui;
 }

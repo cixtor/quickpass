@@ -12,5 +12,5 @@ TARGET = quickpass
 TEMPLATE = app
 
 SOURCES += main.cpp quickpass.cpp
-HEADERS += quickpass.h newaccount.h
-FORMS   += quickpass.ui newaccount.ui
+HEADERS += quickpass.h newaccount.h newpassword.h
+FORMS   += quickpass.ui newaccount.ui newpassword.ui
