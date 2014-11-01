@@ -231,6 +231,11 @@ void Quickpass::on_generateNewAccount_clicked(){
     widget->show();
 }
 
+void Quickpass::on_generateNewPassword_clicked(){
+    QWidget *widget = new NewPassword;
+    widget->show();
+}
+
 void NewAccount::on_accountAcceptedBtn_clicked(){
     Quickpass quickpass;
     QString new_account_str;
