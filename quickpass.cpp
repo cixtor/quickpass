@@ -13,8 +13,12 @@
 #include <QTextStream>
 
 #define ACCOUNT_FILENAME "accounts.txt"
-#define ACCOUNT_DELIMITER "~~~";
+#define ACCOUNT_DELIMITER "~~~"
 #define ACCOUNT_PATTERN "^~~~"
+#define TYPE_ALPHA_LOWER "abcdefghijklmnopqrstuvwxyz"
+#define TYPE_ALPHA_UPPER "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+#define TYPE_SPECIAL "!@$%&*_+=-_?/.,:;#"
+#define TYPE_NUMERIC "0123456789"
 
 Quickpass::Quickpass(QWidget *parent) :
     QMainWindow(parent),
@@ -134,6 +138,48 @@ QString Quickpass::GetAccount(){
     ui->statusBar->showMessage( QString::number(accountsFound) + " accounts found." );
 
     return multipleAccounts;
+}
+
+QString Quickpass::GetPasswordTypeChars( QString typeName, QString customChars ){
+    QString dictionary;
+
+    if ( typeName == "all" ) {
+        dictionary += TYPE_ALPHA_LOWER;
+        dictionary += TYPE_ALPHA_UPPER;
+        dictionary += TYPE_SPECIAL;
+        dictionary += TYPE_NUMERIC;
+    }
+
+    else if ( typeName == "alpha_lower" ) { dictionary = TYPE_ALPHA_LOWER; }
+    else if ( typeName == "alpha_upper" ) { dictionary = TYPE_ALPHA_UPPER; }
+    else if ( typeName == "special"     ) { dictionary = TYPE_SPECIAL; }
+    else if ( typeName == "numeric"     ) { dictionary = TYPE_NUMERIC; }
+
+    if ( !customChars.isEmpty() ) {
+        dictionary += customChars;
+    }
+
+    return dictionary;
+}
+
+QList<QString> Quickpass::GeneratePassword( QString type, int length, int quantity, QString custom ){
+    QList<QString> passwordList;
+    QString dictionary = GetPasswordTypeChars( type, custom );
+    int dictionaryLength = dictionary.length();
+
+    for ( int i=0; i<quantity; i++ ) {
+        QString password;
+
+        for ( int j=0; j<length; j++ ) {
+            int index = qrand() % dictionaryLength;
+            QChar nextChar = dictionary.at(index);
+            password.append(nextChar);
+        }
+
+        passwordList.append(password);
+    }
+
+    return passwordList;
 }
 
 bool Quickpass::SaveAccountChanges(){
