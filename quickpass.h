@@ -16,7 +16,8 @@ public:
     QString Accounts;
     QString GetAccounts();
     QString GetAccountFilepath();
-    QList<QString> GeneratePassword(QString, int, int, QString);
+    QString GetPasswordTypeChars(QString);
+    QList<QString> GeneratePassword(QString, int, int);
     int InsertNewAccountData(QString);
     ~Quickpass();
 
@@ -30,7 +31,6 @@ private slots:
 private:
     Ui::Quickpass *ui;
     QString GetAccount();
-    QString GetPasswordTypeChars(QString, QString);
     bool IsEditable();
     bool IsFileUsable(QFile&);
     bool IsRequestedAccount(QString, QString);

@@ -140,7 +140,7 @@ QString Quickpass::GetAccount(){
     return multipleAccounts;
 }
 
-QString Quickpass::GetPasswordTypeChars( QString typeName, QString customChars ){
+QString Quickpass::GetPasswordTypeChars(QString typeName){
     QString dictionary;
 
     if ( typeName == "all" ) {
@@ -155,28 +155,25 @@ QString Quickpass::GetPasswordTypeChars( QString typeName, QString customChars )
     else if ( typeName == "special"     ) { dictionary = TYPE_SPECIAL; }
     else if ( typeName == "numeric"     ) { dictionary = TYPE_NUMERIC; }
 
-    if ( !customChars.isEmpty() ) {
-        dictionary += customChars;
-    }
-
     return dictionary;
 }
 
-QList<QString> Quickpass::GeneratePassword( QString type, int length, int quantity, QString custom ){
+QList<QString> Quickpass::GeneratePassword( QString dictionary, int length, int quantity ){
     QList<QString> passwordList;
-    QString dictionary = GetPasswordTypeChars( type, custom );
     int dictionaryLength = dictionary.length();
 
-    for ( int i=0; i<quantity; i++ ) {
-        QString password;
+    if ( dictionaryLength > 0 ) {
+        for ( int i=0; i<quantity; i++ ) {
+            QString password;
 
-        for ( int j=0; j<length; j++ ) {
-            int index = qrand() % dictionaryLength;
-            QChar nextChar = dictionary.at(index);
-            password.append(nextChar);
+            for ( int j=0; j<length; j++ ) {
+                int index = qrand() % dictionaryLength;
+                QChar nextChar = dictionary.at(index);
+                password.append(nextChar);
+            }
+
+            passwordList.append(password);
         }
-
-        passwordList.append(password);
     }
 
     return passwordList;
@@ -316,6 +313,48 @@ void NewAccount::on_accountAcceptedBtn_clicked(){
 
 void NewAccount::on_accountRejectedBtn_clicked(){
     NewAccount::close();
+}
+
+void NewPassword::on_generateBtn_clicked(){
+    Quickpass quickpass;
+
+    QString dictionary;
+    int length = ui->lengthInput->text().toInt();
+    int quantity = ui->quantityInput->text().toInt();
+    QString customChars = ui->typeCustomInput->text();
+
+    ui->passwordListInput->setText("");
+
+    if ( length <= 0 ) { length = 25; }
+    if ( quantity <= 0 ) { quantity = 5; }
+
+    if ( ui->typeAlphaLowerCheckbox->isChecked() ) {
+        dictionary += quickpass.GetPasswordTypeChars("alpha_lower");
+    }
+
+    if ( ui->typeAlphaUpperCheckbox->isChecked() ) {
+        dictionary += quickpass.GetPasswordTypeChars("alpha_upper");
+    }
+
+    if ( ui->typeNumericCheckbox->isChecked() ) {
+        dictionary += quickpass.GetPasswordTypeChars("numeric");
+    }
+
+    if ( ui->typeSpecialCheckbox->isChecked() ) {
+        dictionary += quickpass.GetPasswordTypeChars("special");
+    }
+
+    if ( !customChars.isEmpty() ) {
+        dictionary += customChars;
+    }
+
+    if ( !dictionary.isEmpty() ) {
+        QList<QString> passwordList = quickpass.GeneratePassword( dictionary, length, quantity );
+
+        for ( int i=0; i<passwordList.size(); i++ ) {
+            ui->passwordListInput->append( passwordList[i] );
+        }
+    }
 }
 
 Quickpass::~Quickpass(){
