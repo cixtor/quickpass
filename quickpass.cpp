@@ -311,6 +311,14 @@ void NewAccount::on_accountAcceptedBtn_clicked(){
     }
 }
 
+void NewAccount::on_generatePasswordBtn_clicked(){
+    Quickpass quickpass;
+    QString dictionary = quickpass.GetPasswordTypeChars("all");
+    QList<QString> passwordList = quickpass.GeneratePassword( dictionary, 15, 1 );
+
+    ui->passwordInput->setText( passwordList[0] );
+}
+
 void NewAccount::on_accountRejectedBtn_clicked(){
     NewAccount::close();
 }
