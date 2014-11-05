@@ -16,6 +16,7 @@ public:
 
 private slots:
     void on_generateBtn_clicked();
+    void on_cancelBtn_clicked();
 
 private:
     Ui::NewPassword *ui;

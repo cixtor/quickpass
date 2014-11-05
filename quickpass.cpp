@@ -365,6 +365,10 @@ void NewPassword::on_generateBtn_clicked(){
     }
 }
 
+void NewPassword::on_cancelBtn_clicked(){
+    NewPassword::close();
+}
+
 Quickpass::~Quickpass(){
     delete ui;
 }
