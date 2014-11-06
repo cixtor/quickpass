@@ -27,7 +27,7 @@ Quickpass::Quickpass(QWidget *parent) :
     ui->setupUi(this);
 
     SetEditMode(false);
-    ui->textView->setText( GetAccounts() );
+    LoadCurrentAccounts();
 }
 
 NewAccount::NewAccount(QWidget *parent) :
@@ -46,6 +46,10 @@ NewPassword::NewPassword(QWidget *parent) :
 
 QString Quickpass::GetAccountFilepath(){
     return qApp->applicationDirPath() + "/" + ACCOUNT_FILENAME;
+}
+
+void Quickpass::LoadCurrentAccounts(){
+    ui->textView->setText( GetAccounts() );
 }
 
 QString Quickpass::GetAccounts(){

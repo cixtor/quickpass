@@ -18,6 +18,7 @@ public:
     QString GetAccountFilepath();
     QString GetPasswordTypeChars(QString);
     QList<QString> GeneratePassword(QString, int, int);
+    void LoadCurrentAccounts();
     int InsertNewAccountData(QString);
     ~Quickpass();
 
