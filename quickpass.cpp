@@ -25,9 +25,6 @@ Quickpass::Quickpass(QWidget *parent) :
     ui(new Ui::Quickpass)
 {
     ui->setupUi(this);
-
-    SetEditMode(false);
-    LoadCurrentAccounts();
 }
 
 NewAccount::NewAccount(QWidget *parent) :

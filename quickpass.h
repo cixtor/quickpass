@@ -18,6 +18,7 @@ public:
     QString GetAccountFilepath();
     QString GetPasswordTypeChars(QString);
     QList<QString> GeneratePassword(QString, int, int);
+    void SetEditMode(bool);
     void LoadCurrentAccounts();
     int InsertNewAccountData(QString);
     ~Quickpass();
@@ -37,7 +38,6 @@ private:
     bool IsRequestedAccount(QString, QString);
     void ResetTextBuffer();
     bool SaveAccountChanges();
-    void SetEditMode(bool);
 
 };
 
