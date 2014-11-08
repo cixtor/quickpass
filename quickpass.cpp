@@ -5,7 +5,6 @@
 #include "ui_newaccount.h"
 #include "ui_newpassword.h"
 
-#include <QDebug>
 #include <QDir>
 #include <QFile>
 #include <QMessageBox>
