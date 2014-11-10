@@ -1,27 +1,25 @@
 # QuickPass
 
-This is a desktop application built on top of **C++** and **QT** to offer an interface where you can search for any string within a separated block of information in a text file to return that block of information where the queried text appeared.
-
-It is intended to be an **Account & Password Launcher** but it technically works with any kind of information stored in a text file and separated by a common string, in this case three equal signs `===`.
+Multi-platform desktop application to manage passwords and accounts information, built on top of **C++/QT** to offer an interface where you can insert data, search for it, and generate random passwords that can be customized using a generator wizard.
 
 ![QuickPass Screenshot](screenshot.png)
 
 ### Features
 
-* Read a simple `text/plain` file.
-* Search block of information wrapped between a common _String_ (in this case `===`).
-* Inline file content edition.
-* **Edit Mode** utility to avoid unwanted modifications in the `TextView`.
-* If the file `accounts.txt` doesn't exists, then **Edit Mode** is enabled automatically.
-* Find multiple blocks with the same matching text searched.
-* Reset `TextView` once the search field is emptied.
+* Read and parse text/plain files.
+* In-line file content edition.
+* Switch between edit modes.
+* Search text wrapped around a common string.
+* Search multiple blocks with the same matching text.
+* New account information generator.
+* Customizable password generator.
+* Random password generator for new account.
+* Random password generator with custom data.
 
 ### TODO
 
-* Account wizard.
-* Accounts file encryptation.
-* Password generator.
-* Backups once **Edit Mode** is enabled.
+* Account file encryption.
+* Backup once edit mode is enabled.
 
 ### License
 
