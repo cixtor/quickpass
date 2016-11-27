@@ -5,10 +5,11 @@
 #include <QFile>
 
 namespace Ui {
-    class Quickpass;
+class Quickpass;
 }
 
-class Quickpass : public QMainWindow {
+class Quickpass : public QMainWindow
+{
     Q_OBJECT
 
 public:
@@ -38,7 +39,6 @@ private:
     bool IsRequestedAccount(QString, QString);
     void ResetTextBuffer();
     bool SaveAccountChanges();
-
 };
 
 #endif // QUICKPASS_H

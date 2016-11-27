@@ -1,13 +1,14 @@
 #include "quickpass.h"
 #include <QApplication>
 
-int main( int argc, char *argv[] ){
-    QApplication application(argc, argv);
-    Quickpass quickpass;
+int main(int argc, char *argv[])
+{
+    QApplication a(argc, argv);
+    Quickpass w;
 
-    quickpass.SetEditMode(false);
-    quickpass.LoadCurrentAccounts();
-    quickpass.show();
-    
-    return application.exec();
+    w.SetEditMode(false);
+    w.LoadCurrentAccounts();
+    w.show();
+
+    return a.exec();
 }
