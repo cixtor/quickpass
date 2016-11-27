@@ -6,19 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>290</width>
+    <width>310</width>
     <height>390</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>290</width>
+    <width>310</width>
     <height>390</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>290</width>
+    <width>310</width>
     <height>390</height>
    </size>
   </property>
@@ -31,7 +31,7 @@
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>270</width>
+      <width>290</width>
       <height>30</height>
      </rect>
     </property>
@@ -39,67 +39,41 @@
      <string>Search...</string>
     </property>
    </widget>
-   <widget class="QLabel" name="saveFileLabel">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>340</y>
-      <width>90</width>
-      <height>22</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Save changes</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="saveFileBtn">
-    <property name="geometry">
-     <rect>
-      <x>200</x>
-      <y>340</y>
-      <width>80</width>
-      <height>22</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Safe File</string>
-    </property>
-   </widget>
    <widget class="QTextEdit" name="textView">
     <property name="geometry">
      <rect>
       <x>10</x>
       <y>50</y>
-      <width>270</width>
+      <width>290</width>
       <height>250</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <family>Monospace</family>
+      <family>Menlo, Monaco, monospace, serif</family>
      </font>
     </property>
    </widget>
-   <widget class="QCheckBox" name="editModeCheckbox">
+   <widget class="QLabel" name="generateNewLabel">
     <property name="geometry">
      <rect>
-      <x>110</x>
-      <y>340</y>
-      <width>80</width>
-      <height>22</height>
+      <x>10</x>
+      <y>300</y>
+      <width>90</width>
+      <height>34</height>
      </rect>
     </property>
     <property name="text">
-     <string>Edit mode</string>
+     <string>Generate new</string>
     </property>
    </widget>
    <widget class="QPushButton" name="generateNewAccount">
     <property name="geometry">
      <rect>
       <x>110</x>
-      <y>310</y>
-      <width>80</width>
-      <height>22</height>
+      <y>300</y>
+      <width>100</width>
+      <height>34</height>
      </rect>
     </property>
     <property name="text">
@@ -109,34 +83,58 @@
    <widget class="QPushButton" name="generateNewPassword">
     <property name="geometry">
      <rect>
-      <x>200</x>
-      <y>310</y>
-      <width>80</width>
-      <height>22</height>
+      <x>205</x>
+      <y>300</y>
+      <width>100</width>
+      <height>34</height>
      </rect>
     </property>
     <property name="text">
      <string>Password</string>
     </property>
    </widget>
-   <widget class="QLabel" name="generateNewLabel">
+   <widget class="QLabel" name="saveFileLabel">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>310</y>
+      <y>330</y>
       <width>90</width>
-      <height>22</height>
+      <height>34</height>
      </rect>
     </property>
     <property name="text">
-     <string>Generate new</string>
+     <string>Save changes</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="editModeCheckbox">
+    <property name="geometry">
+     <rect>
+      <x>115</x>
+      <y>337</y>
+      <width>90</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Edit mode</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="saveFileBtn">
+    <property name="geometry">
+     <rect>
+      <x>205</x>
+      <y>330</y>
+      <width>100</width>
+      <height>34</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Save File</string>
     </property>
    </widget>
   </widget>
-  <widget class="QStatusBar" name="statusBar">
-  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
  </widget>
- <layoutdefault spacing="6" margin="11"/>
  <resources/>
  <connections/>
 </ui>
