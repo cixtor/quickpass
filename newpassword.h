@@ -4,23 +4,22 @@
 #include <QWidget>
 
 namespace Ui {
-    class NewPassword;
+class NewPassword;
 }
 
 class NewPassword : public QWidget {
-    Q_OBJECT
+  Q_OBJECT
 
 public:
-    explicit NewPassword(QWidget *parent = 0);
-    ~NewPassword();
+  explicit NewPassword(QWidget *parent = 0);
+  ~NewPassword();
 
 private slots:
-    void on_generateBtn_clicked();
-    void on_cancelBtn_clicked();
+  void on_generateBtn_clicked();
+  void on_cancelBtn_clicked();
 
 private:
-    Ui::NewPassword *ui;
-
+  Ui::NewPassword *ui;
 };
 
 #endif // NEWPASSWORD_H

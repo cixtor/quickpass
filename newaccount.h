@@ -4,24 +4,23 @@
 #include <QWidget>
 
 namespace Ui {
-    class NewAccount;
+class NewAccount;
 }
 
 class NewAccount : public QWidget {
-    Q_OBJECT
+  Q_OBJECT
 
 public:
-    explicit NewAccount(QWidget *parent = 0);
-    ~NewAccount();
+  explicit NewAccount(QWidget *parent = 0);
+  ~NewAccount();
 
 private slots:
-    void on_accountAcceptedBtn_clicked();
-    void on_accountRejectedBtn_clicked();
-    void on_generatePasswordBtn_clicked();
+  void on_accountAcceptedBtn_clicked();
+  void on_accountRejectedBtn_clicked();
+  void on_generatePasswordBtn_clicked();
 
 private:
-    Ui::NewAccount *ui;
-
+  Ui::NewAccount *ui;
 };
 
 #endif // NEWACCOUNT_H
