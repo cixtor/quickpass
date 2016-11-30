@@ -120,6 +120,9 @@
     </property>
    </widget>
    <widget class="QPushButton" name="saveFileBtn">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>205</x>

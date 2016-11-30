@@ -227,12 +227,14 @@ int Quickpass::InsertNewAccountData(QString account_info){
 }
 
 void Quickpass::SetEditMode(bool enabled=false){
-    if ( enabled == true ) {
+    if (enabled) {
         ui->editModeCheckbox->setChecked(true);
         ui->textView->setReadOnly(false);
+        ui->saveFileBtn->setEnabled(true);
     } else {
         ui->editModeCheckbox->setChecked(false);
         ui->textView->setReadOnly(true);
+        ui->saveFileBtn->setEnabled(false);
     }
 }
 
@@ -263,10 +265,15 @@ void Quickpass::on_saveFileBtn_clicked(){
 
 void Quickpass::on_editModeCheckbox_clicked(){
     bool editModeEnabled = IsEditable();
+    QString editModeState = "enabled";
+
+    if (!editModeEnabled) {
+        editModeState = "disabled";
+    }
+
     SetEditMode(editModeEnabled);
 
-    QString editModeState = editModeEnabled ? "enabled" : "disabled";
-    ui->statusBar->showMessage( "Edit mode " + editModeState, 3000 );
+    ui->statusBar->showMessage("Edit mode " + editModeState, 3000);
 }
 
 void Quickpass::on_generateNewAccount_clicked(){
