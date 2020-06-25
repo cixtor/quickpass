@@ -11,7 +11,7 @@ class NewAccount : public QWidget {
   Q_OBJECT
 
 public:
-  explicit NewAccount(QWidget *parent = 0);
+  explicit NewAccount(QWidget *parent = nullptr);
   ~NewAccount();
 
 private slots:

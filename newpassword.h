@@ -11,7 +11,7 @@ class NewPassword : public QWidget {
   Q_OBJECT
 
 public:
-  explicit NewPassword(QWidget *parent = 0);
+  explicit NewPassword(QWidget *parent = nullptr);
   ~NewPassword();
 
 private slots:

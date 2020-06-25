@@ -12,7 +12,7 @@ class Quickpass : public QMainWindow {
   Q_OBJECT
 
 public:
-  explicit Quickpass(QWidget *parent = 0);
+  explicit Quickpass(QWidget *parent = nullptr);
   QString Accounts;
   QString GetAccounts();
   QString GetAccountFilepath();
