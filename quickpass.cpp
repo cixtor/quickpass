@@ -159,7 +159,7 @@ QList<QString> Quickpass::GeneratePassword(QString dictionary, int length,
       QString password;
 
       for (int j = 0; j < length; j++) {
-        int index = qrand() % dictionaryLength;
+        int index = arc4random() % dictionaryLength;
         QChar nextChar = dictionary.at(index);
         password.append(nextChar);
       }
