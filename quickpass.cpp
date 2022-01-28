@@ -8,6 +8,7 @@
 #include <QDir>
 #include <QFile>
 #include <QMessageBox>
+#include <QRandomGenerator>
 #include <QString>
 #include <QTextStream>
 
@@ -153,7 +154,7 @@ QList<QString> Quickpass::GeneratePassword(QString dictionary, int length,
       QString password;
 
       for (int j = 0; j < length; j++) {
-        int index = arc4random() % dictionaryLength;
+        int index = QRandomGenerator::system()->bounded(dictionaryLength);
         QChar nextChar = dictionary.at(index);
         password.append(nextChar);
       }
