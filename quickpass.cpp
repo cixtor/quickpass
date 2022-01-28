@@ -13,7 +13,6 @@
 
 #define ACCOUNT_FILENAME "accounts.txt"
 #define ACCOUNT_DELIMITER "~~~"
-#define ACCOUNT_PATTERN "^~~~"
 #define TYPE_ALPHA_LOWER "abcdefghijklmnopqrstuvwxyz"
 #define TYPE_ALPHA_UPPER "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 #define TYPE_SPECIAL "!@$%&*_+=-_?/.,:;#"
@@ -69,17 +68,8 @@ void Quickpass::ResetTextBuffer() { ui->textView->clear(); }
 
 bool Quickpass::IsRequestedAccount(QString requestedAccount,
                                    QString accountCredentials) {
-  QStringList lines = accountCredentials.split(QRegExp("\n"));
-
-  for (QStringList::iterator it = lines.begin(); it != lines.end(); it++) {
-    QString currentLine = *it;
-
-    if (currentLine.contains(QRegExp(requestedAccount))) {
-      return true;
-    }
-  }
-
-  return false;
+  return !requestedAccount.isEmpty() &&
+         accountCredentials.contains(requestedAccount, Qt::CaseSensitive);
 }
 
 bool Quickpass::IsFileUsable(QFile &file) {
@@ -102,13 +92,10 @@ QString Quickpass::GetAccount() {
     return Accounts;
   }
 
-  QRegExp rx("\n");
-  QStringList lines = Accounts.split(rx);
+  const QStringList lines = Accounts.split('\n');
 
-  for (QStringList::iterator it = lines.begin(); it != lines.end(); it++) {
-    QString currentLine = *it;
-
-    if (currentLine.contains(QRegExp(ACCOUNT_PATTERN))) {
+  for (const QString &currentLine : lines) {
+    if (currentLine.startsWith(ACCOUNT_DELIMITER)) {
       if (IsRequestedAccount(requestedAccount, accountCredentials)) {
         accountsFound += 1;
         multipleAccounts += accountCredentials;
@@ -120,6 +107,13 @@ QString Quickpass::GetAccount() {
     } else {
       accountCredentials += currentLine + "\n";
     }
+  }
+
+  if (IsRequestedAccount(requestedAccount, accountCredentials)) {
+    accountsFound += 1;
+    multipleAccounts += accountCredentials;
+    multipleAccounts += ACCOUNT_DELIMITER;
+    multipleAccounts += "\n";
   }
 
   ui->statusBar->showMessage(QString::number(accountsFound) +
