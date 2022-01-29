@@ -3,6 +3,8 @@
 
 #include <QWidget>
 
+class Quickpass;
+
 namespace Ui {
 class NewAccount;
 }
@@ -11,7 +13,7 @@ class NewAccount : public QWidget {
   Q_OBJECT
 
 public:
-  explicit NewAccount(QWidget *parent = nullptr);
+  explicit NewAccount(Quickpass *owner, QWidget *parent = nullptr);
   ~NewAccount();
 
 private slots:
@@ -21,6 +23,7 @@ private slots:
 
 private:
   Ui::NewAccount *ui;
+  Quickpass *quickpass;
 };
 
 #endif // NEWACCOUNT_H

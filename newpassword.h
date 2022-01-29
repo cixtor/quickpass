@@ -3,6 +3,8 @@
 
 #include <QWidget>
 
+class Quickpass;
+
 namespace Ui {
 class NewPassword;
 }
@@ -11,7 +13,7 @@ class NewPassword : public QWidget {
   Q_OBJECT
 
 public:
-  explicit NewPassword(QWidget *parent = nullptr);
+  explicit NewPassword(Quickpass *owner, QWidget *parent = nullptr);
   ~NewPassword();
 
 private slots:
@@ -20,6 +22,7 @@ private slots:
 
 private:
   Ui::NewPassword *ui;
+  Quickpass *quickpass;
 };
 
 #endif // NEWPASSWORD_H

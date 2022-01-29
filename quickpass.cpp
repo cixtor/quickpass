@@ -24,14 +24,16 @@ Quickpass::Quickpass(QWidget *parent)
   ui->setupUi(this);
 }
 
-NewAccount::NewAccount(QWidget *parent)
-    : QWidget(parent), ui(new Ui::NewAccount) {
+NewAccount::NewAccount(Quickpass *owner, QWidget *parent)
+    : QWidget(parent), ui(new Ui::NewAccount), quickpass(owner) {
   ui->setupUi(this);
+  setAttribute(Qt::WA_DeleteOnClose, true);
 }
 
-NewPassword::NewPassword(QWidget *parent)
-    : QWidget(parent), ui(new Ui::NewPassword) {
+NewPassword::NewPassword(Quickpass *owner, QWidget *parent)
+    : QWidget(parent), ui(new Ui::NewPassword), quickpass(owner) {
   ui->setupUi(this);
+  setAttribute(Qt::WA_DeleteOnClose, true);
 }
 
 QString Quickpass::GetAccountFilepath() {
@@ -252,17 +254,23 @@ void Quickpass::on_editModeCheckbox_clicked() {
 }
 
 void Quickpass::on_generateNewAccount_clicked() {
-  QWidget *widget = new NewAccount;
+  QWidget *widget = new NewAccount(this, this);
   widget->show();
 }
 
 void Quickpass::on_generateNewPassword_clicked() {
-  QWidget *widget = new NewPassword;
+  QWidget *widget = new NewPassword(this, this);
   widget->show();
 }
 
 void NewAccount::on_accountAcceptedBtn_clicked() {
-  Quickpass quickpass;
+  if (!quickpass) {
+    QMessageBox::critical(this, "Quickpass error",
+                          "Cannot save account because the main window was "
+                          "not provided.");
+    return;
+  }
+
   QString new_account_str;
 
   QString uniqueid = ui->uniqueIdInput->text();
@@ -291,9 +299,10 @@ void NewAccount::on_accountAcceptedBtn_clicked() {
     new_account_str += "moreinfo:\n" + moreinfo + "\n";
   }
 
-  int newAccountSaved = quickpass.InsertNewAccountData(new_account_str);
+  int newAccountSaved = quickpass->InsertNewAccountData(new_account_str);
 
   if (newAccountSaved == 0) {
+    quickpass->LoadCurrentAccounts();
     NewAccount::close();
   } else if (newAccountSaved == 1) {
     QMessageBox::critical(this, "Quickpass error",
@@ -303,9 +312,15 @@ void NewAccount::on_accountAcceptedBtn_clicked() {
 }
 
 void NewAccount::on_generatePasswordBtn_clicked() {
-  Quickpass quickpass;
-  QString dictionary = quickpass.GetPasswordTypeChars("all");
-  QList<QString> passwordList = quickpass.GeneratePassword(dictionary, 15, 1);
+  if (!quickpass) {
+    QMessageBox::critical(this, "Quickpass error",
+                          "Cannot generate password because the main window "
+                          "was not provided.");
+    return;
+  }
+
+  QString dictionary = quickpass->GetPasswordTypeChars("all");
+  QList<QString> passwordList = quickpass->GeneratePassword(dictionary, 15, 1);
 
   ui->passwordInput->setText(passwordList[0]);
 }
@@ -313,7 +328,12 @@ void NewAccount::on_generatePasswordBtn_clicked() {
 void NewAccount::on_accountRejectedBtn_clicked() { NewAccount::close(); }
 
 void NewPassword::on_generateBtn_clicked() {
-  Quickpass quickpass;
+  if (!quickpass) {
+    QMessageBox::critical(this, "Quickpass error",
+                          "Cannot generate password because the main window "
+                          "was not provided.");
+    return;
+  }
 
   QString dictionary;
   int length = ui->lengthInput->text().toInt();
@@ -331,19 +351,19 @@ void NewPassword::on_generateBtn_clicked() {
   }
 
   if (ui->typeAlphaLowerCheckbox->isChecked()) {
-    dictionary += quickpass.GetPasswordTypeChars("alpha_lower");
+    dictionary += quickpass->GetPasswordTypeChars("alpha_lower");
   }
 
   if (ui->typeAlphaUpperCheckbox->isChecked()) {
-    dictionary += quickpass.GetPasswordTypeChars("alpha_upper");
+    dictionary += quickpass->GetPasswordTypeChars("alpha_upper");
   }
 
   if (ui->typeNumericCheckbox->isChecked()) {
-    dictionary += quickpass.GetPasswordTypeChars("numeric");
+    dictionary += quickpass->GetPasswordTypeChars("numeric");
   }
 
   if (ui->typeSpecialCheckbox->isChecked()) {
-    dictionary += quickpass.GetPasswordTypeChars("special");
+    dictionary += quickpass->GetPasswordTypeChars("special");
   }
 
   if (!customChars.isEmpty()) {
@@ -352,7 +372,7 @@ void NewPassword::on_generateBtn_clicked() {
 
   if (!dictionary.isEmpty()) {
     QList<QString> passwordList =
-        quickpass.GeneratePassword(dictionary, length, quantity);
+        quickpass->GeneratePassword(dictionary, length, quantity);
 
     for (int i = 0; i < passwordList.size(); i++) {
       ui->passwordListInput->append(passwordList[i]);
