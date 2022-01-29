@@ -171,18 +171,20 @@ QList<QString> Quickpass::GeneratePassword(QString dictionary, int length,
 bool Quickpass::SaveAccountChanges() {
   QFile file(GetAccountFilepath());
 
-  if (IsFileUsable(file)) {
-    QString currentTextBuffer = ui->textView->toPlainText();
+  QString currentTextBuffer = ui->textView->toPlainText();
 
-    if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
-      QTextStream out(&file);
-      out << currentTextBuffer;
-      file.close();
+  if (file.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate)) {
+    QTextStream out(&file);
+    out.setCodec("UTF-8");
+    out << currentTextBuffer;
+    file.close();
 
-      return true;
-    }
+    return true;
   }
 
+  QMessageBox::critical(this, "Quickpass error",
+                        "Error saving data in file.\n"
+                        "Verify that the file exists and is writable.");
   return false;
 }
 
@@ -197,8 +199,9 @@ int Quickpass::InsertNewAccountData(QString account_info) {
 
   QFile file(GetAccountFilepath());
 
-  if (file.open(QIODevice::Append | QIODevice::WriteOnly)) {
+  if (file.open(QIODevice::Append | QIODevice::WriteOnly | QIODevice::Text)) {
     QTextStream out(&file);
+    out.setCodec("UTF-8");
     out << ACCOUNT_DELIMITER;
     out << "\n";
     out << account_info;
